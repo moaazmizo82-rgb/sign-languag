@@ -1,27 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const signItemSchema = new mongoose.Schema({
-  key: { type: String, required: true }, // e.g., 'A', 'Red', '1', 'Hello'
-  label: { type: String, required: true },
-  imageUrl: String,
-  videoUrl: String,
-  avatarAnimationId: String // for 3D avatar mapping
+const signSchema = new mongoose.Schema({
+  key: { type: String, required: true }, // e.g. "A", "dolphin"
+  label: { type: String }, // human-readable name
+  imageUrl: { type: String }, // static image
+  videoUrl: { type: String }, // video of gesture
+  avatarAnimationId: { type: String }, // optional 3D avatar reference
 });
 
 const moduleSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    category: {
-      type: String,
-      enum: ['letters', 'colors', 'numbers', 'sentences'],
-      required: true
-    },
-    description: String,
-    coverImage: String,
-    signs: [signItemSchema],
-    isPublished: { type: Boolean, default: true }
+    title: { type: String, required: true }, // e.g. "Learning Letters"
+    category: { type: String, required: true }, // e.g. "letters", "numbers", "gestures"
+    description: { type: String },
+    coverImage: { type: String },
+    signs: [signSchema], // array of signs in this module
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // admin who created
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.model('Module', moduleSchema);
+export default mongoose.model("Module", moduleSchema);
