@@ -33,10 +33,7 @@ router.delete("/quizzes/:id", requireAuth, requireAdmin, deleteQuiz);
 router.post("/quizzes/import", requireAuth, requireAdmin, bulkImportQuizzes);
 
 // User management
-// Module management
-router.post('/modules', requireAuth, requireAdmin, createModule);
-router.put('/modules/:id', requireAuth, requireAdmin, updateModule);
-router.delete('/modules/:id', requireAuth, requireAdmin, deleteModule);
-
+router.get("/users", requireAuth, requireAdmin, listUsers);
+router.delete("/users/:id", requireAuth, requireAdmin, deleteUser);
 
 export default router;

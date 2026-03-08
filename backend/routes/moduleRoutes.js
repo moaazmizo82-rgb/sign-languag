@@ -1,22 +1,22 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   listModules,
   getModule,
   createModule,
   updateModule,
-  deleteModule
-} from '../controllers/moduleController.js';
-import { requireAuth } from '../middleware/authMiddleware.js';
+  deleteModule,
+} from "../controllers/moduleController.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
 // Public list & get
-router.get('/', listModules);
-router.get('/:id', getModule);
+router.get("/", listModules);
+router.get("/:id", getModule);
 
-// Admin create/update/delete (simplified: any authenticated user)
-router.post('/', requireAuth, createModule);
-router.put('/:id', requireAuth, updateModule);
-router.delete('/:id', requireAuth, deleteModule);
+// Authenticated create/update/delete
+router.post("/", requireAuth, createModule);
+router.put("/:id", requireAuth, updateModule);
+router.delete("/:id", requireAuth, deleteModule);
 
 export default router;
