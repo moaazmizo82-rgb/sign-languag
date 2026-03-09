@@ -3,10 +3,7 @@ import Module from "../models/Module.js";
 import Quiz from "../models/Quiz.js";
 
 // Module CRUD
-// controllers/adminController.js
 
-
-// ✅ Define and export updateModule
 export const updateModule = async (req, res, next) => {
   try {
     const mod = await Module.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -17,10 +14,13 @@ export const updateModule = async (req, res, next) => {
   }
 };
 
-// ...make sure you also export createModule, deleteModule, etc.
-
 export const createModule = async (req, res, next) => {
-  /* ... */
+  try {
+    const mod = await Module.create({ ...req.body, createdBy: req.user.id });
+    res.status(201).json(mod);
+  } catch (err) {
+    next(err);
+  }
 };
 export const deleteModule = async (req, res, next) => {
   try {
@@ -109,3 +109,4 @@ export const bulkImportQuizzes = async (req, res, next) => {
     next(err);
   }
 };
+
